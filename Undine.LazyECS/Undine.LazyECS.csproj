@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LazyECS" Version="0.1.0" />
+    <PackageReference Include="Undine.Core" Version="0.0.0.3" />
+  </ItemGroup>
+
+</Project>
