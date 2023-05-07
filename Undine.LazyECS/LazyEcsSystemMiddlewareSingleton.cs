@@ -25,7 +25,6 @@ namespace Undine.LazyECS
         private Dictionary<Type, UnifiedSystem> Systems { get; set; } = new Dictionary<Type, UnifiedSystem>();
 
         public void AddSystem(UnifiedSystem system, Type type)
-        //where A : struct
         {
             this.Systems.Add(type, system);
         }

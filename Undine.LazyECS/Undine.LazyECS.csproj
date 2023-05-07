@@ -1,12 +1,20 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/tomaszcekalo/Undine.LazyECS</RepositoryUrl>
+    <PackageTags>ecs, reactive, patterns, ioc, view-separation, xna, game-development, unity, monogame, gamedev, games, ecs, c-sharp, entity-component, entity-framework, entity, entity-component-system, tdd, test-driven-development, performance, design-pattern, paradigmshift, paradigm, design-patterns, game, game-engine, scripts, scripting, data-driven, data, driven, lazy, undine</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	  <PackageReadmeFile>README.md</PackageReadmeFile>
+	  <Description>Undine bindings for LazyECS</Description>
+	  <Authors>Tomasz Cekało</Authors>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="LazyECS" Version="0.1.0" />
     <PackageReference Include="Undine.Core" Version="0.0.0.3" />
+	  <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
