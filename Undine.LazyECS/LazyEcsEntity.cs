@@ -12,7 +12,7 @@ namespace Undine.LazyECS
         { }
 
         public Entity Entity { get; internal set; }
-        public ECSManager ECSManager { get; internal set; }
+        public UndineEcsManager ECSManager { get; internal set; }
 
         public void AddComponent<A>(in A component) where A : struct
         {

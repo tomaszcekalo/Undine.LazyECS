@@ -7,11 +7,11 @@ using Undine.Core;
 
 namespace Undine.LazyECS
 {
-    public class LazyEcsContainer : Undine.Core.EcsContainer
+    public class LazyEcsContainer : EcsContainer
     {
         public ComponentAssignCreator ComponentAssignCreator { get; }
-        public ECSManager ECSManager { get; }
-        public EntitySystemsController EntitySystems { get; private set; }
+        public UndineEcsManager ECSManager { get; }
+        public UndineEntitySystemsController EntitySystems { get; private set; }
 
         public override void Init()
         {
@@ -22,7 +22,7 @@ namespace Undine.LazyECS
         public LazyEcsContainer()
         {
             ComponentAssignCreator = new ComponentAssignCreator();
-            ECSManager = new ECSManager(ComponentAssignCreator);
+            ECSManager = new UndineEcsManager(ComponentAssignCreator);
         }
 
         public override void AddSystem<A>(UnifiedSystem<A> system)
