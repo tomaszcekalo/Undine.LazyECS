@@ -7,13 +7,26 @@ using Undine.Core;
 
 namespace Undine.LazyECS
 {
-    public class LazyEcsSystem<A> : ISystemProcessing, Core.ISystem
+    public abstract class LazyEcsSystem : ISystemProcessing, ISystem
+    {
+        public bool SkipProcessing { get; set; }
+
+        public void Execute()
+        {
+            if (!SkipProcessing)
+                ProcessAll();
+        }
+
+        public abstract void ProcessAll();
+    }
+
+    public class LazyEcsSystem<A> : LazyEcsSystem
         where A : struct
     {
         [InjectComponent] public LazyEcsComponent<A>[] AComponent;
         public UnifiedSystem<A> System { get; set; }
 
-        public void Execute()
+        public override void ProcessAll()
         {
             if (System == null)
             {
@@ -24,14 +37,9 @@ namespace Undine.LazyECS
                 System.ProcessSingleEntity(i, ref AComponent[i].Value);
             }
         }
-
-        public void ProcessAll()
-        {
-            Execute();
-        }
     }
 
-    public class LazyEcsSystem<A, B> : ISystemProcessing, Core.ISystem
+    public class LazyEcsSystem<A, B> : LazyEcsSystem
         where A : struct
         where B : struct
     {
@@ -39,7 +47,7 @@ namespace Undine.LazyECS
         [InjectComponent] public LazyEcsComponent<B>[] BComponent;
         public UnifiedSystem<A, B> System { get; set; }
 
-        public void Execute()
+        public override void ProcessAll()
         {
             if (System == null)
             {
@@ -50,14 +58,9 @@ namespace Undine.LazyECS
                 System.ProcessSingleEntity(i, ref AComponent[i].Value, ref BComponent[i].Value);
             }
         }
-
-        public void ProcessAll()
-        {
-            Execute();
-        }
     }
 
-    public class LazyEcsSystem<A, B, C> : ISystemProcessing, Core.ISystem
+    public class LazyEcsSystem<A, B, C> : LazyEcsSystem
         where A : struct
         where B : struct
         where C : struct
@@ -68,7 +71,7 @@ namespace Undine.LazyECS
 
         public UnifiedSystem<A, B, C> System { get; set; }
 
-        public void Execute()
+        public override void ProcessAll()
         {
             if (System == null)
             {
@@ -82,14 +85,9 @@ namespace Undine.LazyECS
                     ref CComponent[i].Value);
             }
         }
-
-        public void ProcessAll()
-        {
-            Execute();
-        }
     }
 
-    public class LazyEcsSystem<A, B, C, D> : ISystemProcessing, Core.ISystem
+    public class LazyEcsSystem<A, B, C, D> : LazyEcsSystem
         where A : struct
         where B : struct
         where C : struct
@@ -102,7 +100,7 @@ namespace Undine.LazyECS
 
         public UnifiedSystem<A, B, C, D> System { get; set; }
 
-        public void Execute()
+        public override void ProcessAll()
         {
             if (System == null)
             {
@@ -116,11 +114,6 @@ namespace Undine.LazyECS
                     ref CComponent[i].Value,
                     ref DComponent[i].Value);
             }
-        }
-
-        public void ProcessAll()
-        {
-            Execute();
         }
     }
 }

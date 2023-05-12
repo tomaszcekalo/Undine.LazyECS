@@ -6,6 +6,8 @@ Console.WriteLine("Hello, World!");
 var container = new LazyEcsContainer();
 container.AddSystem(new SpeedSystem());
 container.AddSystem(new AccelerationSystem());
+
+var positionLogger = container.GetSystem(new PositionLogger());
 container.Init();
 var entity = container.CreateNewEntity();
 entity.AddComponent(new PositionComponent());
@@ -23,7 +25,16 @@ entity.AddComponent(new AccelerationComponent()
 for (int i = 0; i < 20; i++)
 {
     container.Run();
-    Console.WriteLine("Y =" + entity.GetComponent<PositionComponent>().y);
+    //Console.WriteLine("Y =" + entity.GetComponent<PositionComponent>().y);
+    positionLogger.ProcessAll();
+}
+
+public class PositionLogger : UnifiedSystem<PositionComponent>
+{
+    public override void ProcessSingleEntity(int entityId, ref PositionComponent a)
+    {
+        Console.WriteLine("Y =" + a.y);
+    }
 }
 
 public class SpeedSystem : UnifiedSystem<PositionComponent, VelocityComponent>

@@ -18,22 +18,22 @@ namespace Undine.LazyECS
             this.ecsManager = undineEcsManager;
         }
 
-        public void AddComponent(Entity entity, IComponentData componentData)
+        public new void AddComponent(Entity entity, IComponentData componentData)
         {
             addEventComponentInformation.Push((entity, componentData, componentData.GetType()));
         }
 
-        public void RemoveComponent(Entity entity, Type type)
+        public new void RemoveComponent(Entity entity, Type type)
         {
             removeEventComponentInformation.Push((entity, type));
         }
 
-        public void RemoveComponent<T>(Entity entity)
+        public new void RemoveComponent<T>(Entity entity)
         {
             RemoveComponent(entity, typeof(T));
         }
 
-        public void ExecuteEvents()
+        public new void ExecuteEvents()
         {
             if (addEventComponentInformation.Count + removeEventComponentInformation.Count == 0)
             {

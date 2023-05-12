@@ -62,34 +62,42 @@ namespace Undine.LazyECS
 
         public override ISystem GetSystem<A>(UnifiedSystem<A> system)
         {
-            return new LazyEcsSystem<A>()
+            var result = new LazyEcsSystem<A>()
             {
                 System = system
             };
+            ECSManager.Register(result);
+            return result;
         }
 
         public override ISystem GetSystem<A, B>(UnifiedSystem<A, B> system)
         {
-            return new LazyEcsSystem<A, B>()
+            var result = new LazyEcsSystem<A, B>()
             {
                 System = system
             };
+            ECSManager.Register(result);
+            return result;
         }
 
         public override ISystem GetSystem<A, B, C>(UnifiedSystem<A, B, C> system)
         {
-            return new LazyEcsSystem<A, B, C>()
+            var result = new LazyEcsSystem<A, B, C>()
             {
                 System = system
             };
+            ECSManager.Register(result);
+            return result;
         }
 
         public override ISystem GetSystem<A, B, C, D>(UnifiedSystem<A, B, C, D> system)
         {
-            return new LazyEcsSystem<A, B, C, D>()
+            var result = new LazyEcsSystem<A, B, C, D>()
             {
                 System = system
             };
+            ECSManager.Register(result);
+            return result;
         }
 
         public override void Run()

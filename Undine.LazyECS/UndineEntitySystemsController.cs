@@ -7,10 +7,10 @@ namespace Undine.LazyECS
 {
     public class UndineEntitySystemsController
     {
-        internal readonly Dictionary<Type, SystemProcessingInfo> SystemInfos;
+        internal readonly Dictionary<Type, UndineSystemProcessingInfo> SystemInfos;
         private readonly UndineEntityManager entityManager;
 
-        public UndineEntitySystemsController(Dictionary<Type, SystemProcessingInfo> systemInfos, UndineEntityManager entityManager)
+        public UndineEntitySystemsController(Dictionary<Type, UndineSystemProcessingInfo> systemInfos, UndineEntityManager entityManager)
         {
             SystemInfos = systemInfos;
             this.entityManager = entityManager;

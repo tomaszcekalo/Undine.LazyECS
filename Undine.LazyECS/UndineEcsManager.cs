@@ -13,7 +13,7 @@ namespace Undine.LazyECS
 {
     public class UndineEcsManager : ECSManager
     {
-        public Dictionary<Type, ISystemProcessing> RegisteredSystemInstances { get; } = new Dictionary<Type, ISystemProcessing>();
+        public Dictionary<Type, LazyEcsSystem> RegisteredSystemInstances { get; } = new Dictionary<Type, LazyEcsSystem>();
         public HashSet<Type> RegisteredSystemsProcessing { get; } = new HashSet<Type>();
         private UndineEntitySystemsController entitySystemsController;
         public new UndineEntityManager EntityManager { get; set; }
@@ -26,13 +26,8 @@ namespace Undine.LazyECS
             this.ComponentAssignCreator = componentAssignCreator;
         }
 
-        public (ISystemProcessing, List<ComponentInfo>) GetSystemInstance(Type type)
+        public (LazyEcsSystem, List<ComponentInfo>) GetSystemInstance(Type type)
         {
-            ISystemProcessing instance;
-            if (RegisteredSystemInstances.ContainsKey(type))
-            {
-                return (RegisteredSystemInstances[type], new List<ComponentInfo>());
-            }
             var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance)
                 .Where(CheckField);
 
@@ -44,7 +39,11 @@ namespace Undine.LazyECS
                     new ComponentInfo(fieldInfo.FieldType, expressionAssign));
             }
 
-            instance = Activator.CreateInstance(type) as ISystemProcessing;
+            if (RegisteredSystemInstances.ContainsKey(type))
+            {
+                return (RegisteredSystemInstances[type], assignInfo);
+            }
+            LazyEcsSystem instance = Activator.CreateInstance(type) as LazyEcsSystem;
             return (instance, assignInfo);
         }
 
@@ -52,13 +51,13 @@ namespace Undine.LazyECS
         {
             EntityManager = new UndineEntityManager(this);
 
-            var systemInfos = new Dictionary<Type, SystemProcessingInfo>();
+            var systemInfos = new Dictionary<Type, UndineSystemProcessingInfo>();
 
             foreach (var type in RegisteredSystemsProcessing)
             {
                 var (instance, assignInfo) = GetSystemInstance(type);
                 systemInfos.Add(type,
-                    new SystemProcessingInfo { SystemProcessing = instance, NeededComponents = assignInfo });
+                    new UndineSystemProcessingInfo { SystemProcessing = instance, NeededComponents = assignInfo });
             }
 
             entitySystemsController = new UndineEntitySystemsController(systemInfos, EntityManager);
@@ -96,10 +95,11 @@ namespace Undine.LazyECS
             RegisteredSystemsProcessing.Add(typeof(T));
         }
 
-        public void Register<T>(T system)
-            where T : ISystemProcessing
+        public void Register<T>(T system, bool skipProcessing = true)
+            where T : LazyEcsSystem
         {
             Register<T>();
+            system.SkipProcessing = skipProcessing;
             RegisteredSystemInstances.Add(system.GetType(), system);
         }
 
@@ -107,6 +107,18 @@ namespace Undine.LazyECS
         {
             var attribute = fieldInfo.GetCustomAttribute<InjectComponentAttribute>();
             return attribute != null;
+        }
+
+        public void AttachComponents(UndineSystemProcessingInfo processingInfo, List<Entity> entities)
+        {
+            foreach (var field in processingInfo.NeededComponents)
+            {
+                var components = Array.CreateInstance(field.TypeComponent.GetElementType(), entities.Count);
+                for (var i = 0; i < entities.Count; i++)
+                    components.SetValue(
+                        EntityContainer.GetComponent(entities[i], field.TypeComponent.GetElementType()), i);
+                field.AttachToSystem(processingInfo.SystemProcessing, components as IComponentData[]);
+            }
         }
     }
 }
