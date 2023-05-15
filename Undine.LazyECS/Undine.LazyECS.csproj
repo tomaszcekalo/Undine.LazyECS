@@ -9,7 +9,7 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<Description>Undine bindings for LazyECS</Description>
 	<Authors>Tomasz Cekało</Authors>
-	<AssemblyVersion>1.0.1</AssemblyVersion>
+	<AssemblyVersion>1.0.2</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<Version>$(AssemblyVersion)</Version>
   </PropertyGroup>
