@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="LazyECS" Version="0.1.0" />
-    <PackageReference Include="Undine.Core" Version="0.0.0.5" />
+    <PackageReference Include="Undine.Core" Version="0.0.0.6" />
 	  <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
