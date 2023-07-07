@@ -27,24 +27,34 @@ namespace Undine.LazyECS
 
         public override void AddSystem<A>(UnifiedSystem<A> system)
         {
+            RegisterComponentType<A>();
             LazyEcsSystemMiddlewareSingleton.GetInstance().AddSystem(system, typeof(UnifiedSystem<A>));
             ECSManager.Register<LazyEcsSystem<A>>();
         }
 
         public override void AddSystem<A, B>(UnifiedSystem<A, B> system)
         {
+            RegisterComponentType<A>();
+            RegisterComponentType<B>();
             LazyEcsSystemMiddlewareSingleton.GetInstance().AddSystem(system, typeof(UnifiedSystem<A, B>));
             ECSManager.Register<LazyEcsSystem<A, B>>();
         }
 
         public override void AddSystem<A, B, C>(UnifiedSystem<A, B, C> system)
         {
+            RegisterComponentType<A>();
+            RegisterComponentType<B>();
+            RegisterComponentType<C>();
             LazyEcsSystemMiddlewareSingleton.GetInstance().AddSystem(system, typeof(UnifiedSystem<A, B, C>));
             ECSManager.Register<LazyEcsSystem<A, B, C>>();
         }
 
         public override void AddSystem<A, B, C, D>(UnifiedSystem<A, B, C, D> system)
         {
+            RegisterComponentType<A>();
+            RegisterComponentType<B>();
+            RegisterComponentType<C>();
+            RegisterComponentType<D>();
             LazyEcsSystemMiddlewareSingleton.GetInstance().AddSystem(system, typeof(UnifiedSystem<A, B, C, D>));
             ECSManager.Register<LazyEcsSystem<A, B, C, D>>();
         }
@@ -62,6 +72,7 @@ namespace Undine.LazyECS
 
         public override ISystem GetSystem<A>(UnifiedSystem<A> system)
         {
+            RegisterComponentType<A>();
             var result = new LazyEcsSystem<A>()
             {
                 System = system
@@ -72,6 +83,8 @@ namespace Undine.LazyECS
 
         public override ISystem GetSystem<A, B>(UnifiedSystem<A, B> system)
         {
+            RegisterComponentType<A>();
+            RegisterComponentType<B>();
             var result = new LazyEcsSystem<A, B>()
             {
                 System = system
@@ -82,6 +95,9 @@ namespace Undine.LazyECS
 
         public override ISystem GetSystem<A, B, C>(UnifiedSystem<A, B, C> system)
         {
+            RegisterComponentType<A>();
+            RegisterComponentType<B>();
+            RegisterComponentType<C>();
             var result = new LazyEcsSystem<A, B, C>()
             {
                 System = system
@@ -92,6 +108,10 @@ namespace Undine.LazyECS
 
         public override ISystem GetSystem<A, B, C, D>(UnifiedSystem<A, B, C, D> system)
         {
+            RegisterComponentType<A>();
+            RegisterComponentType<B>();
+            RegisterComponentType<C>();
+            RegisterComponentType<D>();
             var result = new LazyEcsSystem<A, B, C, D>()
             {
                 System = system
