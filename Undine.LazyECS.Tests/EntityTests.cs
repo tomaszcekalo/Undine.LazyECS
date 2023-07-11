@@ -5,7 +5,7 @@ using Undine.LazyECS.Tests.Components;
 namespace Undine.LazyECS.Tests
 {
     [TestClass]
-    public class LazyEcsEntityTests
+    public class EntityTests
     {
         [TestInitialize]
         public void Init()
@@ -21,17 +21,19 @@ namespace Undine.LazyECS.Tests
             entity.AddComponent(new AComponent());
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public void ComponentCanBeRetrieved()
         {
             var container = new LazyEcsContainer();
-            //var mock = new Mock<UnifiedSystem<AComponent>>();
-            //container.AddSystem(mock.Object);
+            var mock = new Mock<UnifiedSystem<AComponent>>();
+            container.AddSystem(mock.Object);
             container.Init();
-            var entity = container.CreateNewEntity();
+            var entity = (LazyEcsEntity)container.CreateNewEntity();
             entity.AddComponent(new AComponent());
+            container.Run();
+            Assert.IsTrue(container.ECSManager.EntityContainer.HasComponent(entity.Entity, typeof(LazyEcsComponent<AComponent>)));
             ref var component = ref entity.GetComponent<AComponent>();
             Assert.IsNotNull(component);
-        }//*/
+        }//
     }
 }

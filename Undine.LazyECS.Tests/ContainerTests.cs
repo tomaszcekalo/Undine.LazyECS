@@ -10,7 +10,7 @@ using Undine.LazyECS.Tests.Components;
 namespace Undine.LazyECS.Tests
 {
     [TestClass]
-    public class LazyEcsContainerTests
+    public class ContainerTests
     {
         [TestInitialize]
         public void Init()
