@@ -1,4 +1,4 @@
-﻿using Moq;
+﻿using NSubstitute;
 using Undine.Core;
 using Undine.LazyECS.Tests.Components;
 
@@ -25,12 +25,12 @@ namespace Undine.LazyECS.Tests
         public void ComponentCanBeRetrieved()
         {
             var container = new LazyEcsContainer();
-            var mock = new Mock<UnifiedSystem<AComponent>>();
-            container.AddSystem(mock.Object);
+            var mock = Substitute.For<UnifiedSystem<AComponent>>();
+            container.AddSystem(mock);
             container.Init();
             var entity = (LazyEcsEntity)container.CreateNewEntity();
             entity.AddComponent(new AComponent());
-            container.Run();
+            container.Run();//LazyECS updates components on the next frame
             Assert.IsTrue(container.ECSManager.EntityContainer.HasComponent(entity.Entity, typeof(LazyEcsComponent<AComponent>)));
             ref var component = ref entity.GetComponent<AComponent>();
             Assert.IsNotNull(component);
