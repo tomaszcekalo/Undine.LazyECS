@@ -9,14 +9,12 @@
 	<PackageReadmeFile>README.md</PackageReadmeFile>
 	<Description>Undine bindings for LazyECS</Description>
 	<Authors>Tomasz Cekało</Authors>
-	<AssemblyVersion>1.0.5</AssemblyVersion>
-	<FileVersion>$(AssemblyVersion)</FileVersion>
-	<Version>$(AssemblyVersion)</Version>
+	<Version>1.0.6</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="LazyECS" Version="0.1.0" />
-    <PackageReference Include="Undine.Core" Version="0.0.0.6" />
+    <PackageReference Include="Undine.Core" Version="0.0.0.8" />
 	  <None Include="..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
