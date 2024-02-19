@@ -30,10 +30,25 @@ namespace Undine.LazyECS.Tests
             container.Init();
             var entity = (LazyEcsEntity)container.CreateNewEntity();
             entity.AddComponent(new AComponent());
-            container.Run();//LazyECS updates components on the next frame
+            container.Run();
             Assert.IsTrue(container.ECSManager.EntityContainer.HasComponent(entity.Entity, typeof(LazyEcsComponent<AComponent>)));
             ref var component = ref entity.GetComponent<AComponent>();
             Assert.IsNotNull(component);
-        }//
+        }
+        [TestMethod]
+        public void ComponentCanBeRemoved()
+        {
+            var container = new LazyEcsContainer();
+            var mock = Substitute.For<UnifiedSystem<AComponent>>();
+            container.AddSystem(mock);
+            container.Init();
+            var entity = (LazyEcsEntity)container.CreateNewEntity();
+            entity.AddComponent(new AComponent());
+            container.Run();
+            ref var component = ref entity.GetComponent<AComponent>();
+            entity.RemoveComponent<AComponent>();
+            Assert.IsFalse(container.ECSManager.EntityContainer.HasComponent(entity.Entity, typeof(LazyEcsComponent<AComponent>)));
+
+        }
     }
 }

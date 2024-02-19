@@ -26,7 +26,7 @@ namespace Undine.LazyECS
 
         public void AddSystem(UnifiedSystem system, Type type)
         {
-            this.Systems.Add(type, system);
+            this.Systems[type]= system;
         }
 
         internal UnifiedSystem GetSystem(Type type)

@@ -26,5 +26,10 @@ namespace Undine.LazyECS
         {
             return ref this.ECSManager.EntityContainer.GetComponent<LazyEcsComponent<A>>(Entity).Value;
         }
+
+        public void RemoveComponent<A>() where A : struct
+        {
+            this.ECSManager.EntityContainer.RemoveComponent(Entity,typeof(LazyEcsComponent<A>));
+        }
     }
 }

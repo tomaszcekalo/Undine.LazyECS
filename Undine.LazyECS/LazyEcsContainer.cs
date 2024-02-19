@@ -69,6 +69,15 @@ namespace Undine.LazyECS
                 ECSManager = ECSManager
             };
         }
+        public override void DeleteEntity(IUnifiedEntity entity)
+        {
+            var entityToDelete=entity as LazyEcsEntity;
+
+            if(entityToDelete is not null)
+            {
+                ECSManager.RemoveEntity(entityToDelete.Entity);
+            }
+        }
 
         public override ISystem GetSystem<A>(UnifiedSystem<A> system)
         {
